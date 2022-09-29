@@ -7,7 +7,8 @@ const customTheme = extendTheme({
       900: '#DB5461'
     },
     gray: {
-      100: '#686963'
+      100: '#dbd3d3',
+      900: '#686963'
     },
     blue: {
       100: '#8AA29E',
@@ -28,6 +29,18 @@ const customTheme = extendTheme({
     bold: 700,
     extrabold: 800,
     black: 900
+  },
+  components: {
+    Progress: {
+      baseStyle: {
+        track: {
+          bg: '#dbd3d3'
+        },
+        filledTrack: {
+          bg: '#DB5461'
+        }
+      }
+    }
   }
 })
 

@@ -16,8 +16,8 @@ const NavBar = ( { setDisplay } ) => {
       pr='6'
     >
       <IconButton aria-label='Profile' fontSize='2rem' variant='outline' borderWidth='2px' isRound='true' h='3.25rem' w='3.25rem' icon={<GiLabradorHead color='white'/>} onClick={() => setDisplay('profile')}/>
-      <IconButton aria-label='Profile' fontSize='2rem' variant='outline' borderWidth='2px' isRound='true' h='3.25rem' w='3.25rem' icon={<GiDogHouse color='white'/>} onClick={() => setDisplay('home')}/>
-      <IconButton aria-label='Profile' fontSize='2rem' variant='outline' borderWidth='2px' isRound='true' h='3.25rem' w='3.25rem' icon={<HiChatAlt color='white'/>} onClick={() => setDisplay('chat')}/>
+      <IconButton aria-label='Home' fontSize='2rem' variant='outline' borderWidth='2px' isRound='true' h='3.25rem' w='3.25rem' icon={<GiDogHouse color='white'/>} onClick={() => setDisplay('home')}/>
+      <IconButton aria-label='Chat' fontSize='2rem' variant='outline' borderWidth='2px' isRound='true' h='3.25rem' w='3.25rem' icon={<HiChatAlt color='white'/>} onClick={() => setDisplay('chat')}/>
     </Box>
   )
 }
