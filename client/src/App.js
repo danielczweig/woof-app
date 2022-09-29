@@ -9,18 +9,24 @@ import ProfileCard from './components/profileCard/ProfileCard.jsx'
 function App() {
   const [display, setDisplay] = useState('home')
   const [loggedIn, setLoggedIn] = useState(true)
-  const [profileId, setProfileId] = useState('')
-  const [dogs, setDogs] = useState([])
+  const [profileId, setProfileId] = useState('6335e2e6301ce38bc7015333')
+  const [profile, setProfile] = useState([])
+  const [profiles, setProfiles] = useState([])
 
   const displayOptions = {
-    profile: null,
-    home: <ProfileCard />,
+    profile: <ProfileCard profiles={profile}/>,
+    home: <ProfileCard profiles={profiles}/>,
     chat: null
   }
 
-  // useEffect(() => {
-  //   axios.get('http://localhost/3001', )
-  // }, [])
+  useEffect(() => {
+    axios.get(`http://localhost:3001/profile/${profileId}`)
+      .then((response) => setProfile([...profile, response.data]))
+      .catch((err) => console.log(err))
+    axios.get('http://localhost:3001/profiles')
+      .then((response) => setProfiles([...profiles, response.data]))
+      .catch((err) => console.log(err))
+  }, [])
 
   if(loggedIn === false) {
     return (

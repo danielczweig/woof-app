@@ -23,8 +23,16 @@ const profileSchema = mongoose.Schema({
 
 const Profile = mongoose.model('Profile', profileSchema);
 
+const findProfile = (_id) => {
+  return Profile.findById(_id)
+}
+
+const findProfiles = () => {
+  return Profile.find({})
+    .where('_id').ne('6335e2e6301ce38bc7015333')
+}
+
 const addProfile = (name, email, password, sex, birthday, breed, address, weight, sexed, vaccinated, personality, bio, photos ) => {
-  console.log('made it to models, addProfile')
   return Profile.create({
     name: name,
       login: {
@@ -46,3 +54,5 @@ const addProfile = (name, email, password, sex, birthday, breed, address, weight
 
 module.exports.Profile = Profile;
 module.exports.addProfile = addProfile;
+module.exports.findProfiles = findProfiles;
+module.exports.findProfile = findProfile;
