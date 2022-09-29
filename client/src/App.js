@@ -14,17 +14,17 @@ function App() {
   const [profiles, setProfiles] = useState([])
 
   const displayOptions = {
-    profile: <ProfileCard profiles={profile}/>,
-    home: <ProfileCard profiles={profiles}/>,
+    profile: <ProfileCard display={display} profiles={profile}/>,
+    home: <ProfileCard display={display} profiles={profiles}/>,
     chat: null
   }
 
   useEffect(() => {
     axios.get(`http://localhost:3001/profile/${profileId}`)
-      .then((response) => setProfile([...profile, response.data]))
+      .then((response) => setProfile([response.data]))
       .catch((err) => console.log(err))
     axios.get('http://localhost:3001/profiles')
-      .then((response) => setProfiles([...profiles, response.data]))
+      .then((response) => setProfiles(response.data))
       .catch((err) => console.log(err))
   }, [])
 

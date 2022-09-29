@@ -1,33 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Text, Badge } from '@chakra-ui/react'
 
+import calculateAge from '../../utils/calculateAge.js'
+import calculateDistance from '../../utils/calculateDistance.js'
+import calculateSize from '../../utils/calculateSize.js'
 import ImageCarousel from './ImageCarousel.jsx'
+import personalityTraits from '../../utils/personalityTraits.js'
 
-const ProfileCard = () => {
-  const property = {
-    imageUrl: ['https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80','https://images.unsplash.com/photo-1523626797181-8c5ae80d40c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80','https://images.unsplash.com/photo-1575425186775-b8de9a427e67?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'],
+const ProfileCard = ( { display, profiles }) => {
+
+  const [property, setProperty] = useState({
+    imageUrl: [""],
     imageAlt: 'Image of puppy',
-    name: 'Buddy',
-    sex: 'm',
-    age: { // replace with birthday
-      years: 5,
-      months: 0
-    },
-    breed: 'Poodle-Shitzu mix',
-    distance: '3',
-    bio: 'I am just a tiny puppers looking for a friend. I love long walks on the beach and a run through the park.',
-    size: 'small',
-    weight: '10lbs',
-    spayedNeutered: 'yes',
-    shotsUpToDate: 'yes',
-    personality: ['energetic', 'playful', 'timid']
-  }
+    name: '',
+    sex: '',
+    birthday: '01/01/1999',
+    breed: '',
+    location: '90403',
+    bio: '',
+    // size: 'small',
+    weight: 0,
+    sexed: false,
+    vaccinated: false,
+    personality: ''
+  })
+
+  let index = 0;
 
   const badgeThemes = {
     energetic: 'green',
     playful: 'purple',
     timid: 'yellow'
   }
+
+  useEffect(() => {
+    if(profiles[0]) {
+      setProperty({
+        imageUrl: profiles[index].photos,
+        imageAlt: 'Image of puppy',
+        name: profiles[index].name,
+        sex: profiles[index].sex,
+        birthday: profiles[index].birthday,
+        breed: profiles[index].breed,
+        location: profiles[index].address,
+        bio: profiles[index].bio,
+        // size: 'small',
+        weight: profiles[index].weight,
+        sexed: profiles[index].sexed,
+        vaccinated: profiles[index].vaccinated,
+        personality: profiles[index].personality
+      });
+    };
+  },[profiles, display]);
 
   return (
     <Box
@@ -62,31 +86,31 @@ const ProfileCard = () => {
               fontWeight='bold'
               fontSize='3xl'
             >
-              {`(${property.age.years})`}
+              {`(${calculateAge(new Date(property.birthday))})`}
             </Box>
-            <Box display='flex'  ml='2'>
-              {property.sex === 'm' &&
+            <Box display='flex'  alignSelf='center' ml='2'>
+              {property.sex === 'male' &&
                 <Badge colorScheme='teal' as='i' fontSize='lg'>Male</Badge>
               }
-              {property.sex === 'f' &&
+              {property.sex === 'female' &&
                 <Badge colorScheme='pink' as='i' fontSize='lg'>Female</Badge>
               }
             </Box>
           </Box>
-          <Text fontWeight='semibold'>{property.breed}</Text>
-          <Text fontWeight='semibold' mb='5'>{`${property.distance} miles away`}</Text>
+          <Box mb='5'>
+            <Text fontWeight='semibold'>{property.breed}</Text>
+            {display === 'home' &&
+              <Text fontWeight='semibold' >{`${Math.floor(calculateDistance('90403', property.location))} miles away`}</Text>
+            }
+          </Box>
           <Text mb='5'>{property.bio}</Text>
           <Text as='b' color='blue.200' fontSize='xl'>Traits</Text>
-          <Text>{`Size: ${property.size}`}</Text>
+          <Text>{`Size: ${calculateSize(property.weight)}`}</Text>
           <Text>{`Weight: ${property.weight}`}</Text>
-          <Text>{`Spayed/Neutered: ${property.spayedNeutered}`}</Text>
-          <Text mb='5'>{`Vaccinated: ${property.shotsUpToDate}`}</Text>
+          <Text>{`Spayed/Neutered: ${property.sexed}`}</Text>
+          <Text mb='5'>{`Vaccinated: ${property.vaccinated}`}</Text>
           <Text as='b' color='blue.200' fontSize='xl'>Personality</Text>
-          <Box display='flex' gap='2'>
-            {property.personality.map((trait, i) =>
-              <Badge key={i} colorScheme={badgeThemes[trait]} fontSize='m'>{trait}</Badge>
-            )}
-          </Box>
+          <Badge fontSize='m' colorScheme={personalityTraits[property.personality]}>{property.personality}</Badge>
         </Box>
       </Box>
     </Box>
