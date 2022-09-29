@@ -1,22 +1,14 @@
-const Rsvp = require('../models/profile.js');
+const { Profile, addProfile } = require('../models/profile.js');
 
-const saveProfile = (req) => {
-  return Rsvp.create({
-    Name: req.name,
-    Login: {
-      Email: req.email,
-      Password: req.password
-    },
-    Sex: req.sex,
-    Birthday: req.birthday,
-    Breed: req.breed,
-    Address: req.address,
-    Weight: req.weight,
-    Sexed: req.sexed,
-    Vaccinated: req.vaccinated,
-    Personality: req.personality,
-    Bio: req.bio
-  })
+
+module.exports = {
+  createProfile: (req, res) => {
+    console.log('made it to controller')
+    addProfile(req.body.name, req.body.email, req.body.password, req.body.sex, req.body.birthday, req.body.breed, req.body.address, req.body.weight, req.body.sexed, req.body.vaccinated, req.body.personality, req.body.bio, req.body.photos)
+      .then(() => res.status(201).send())
+      .catch((err) => {
+        console.log('in create profile controllers:', err)
+        res.status(500).send()
+      })
+  }
 }
-
-module.exports.saveProfile = saveProfile

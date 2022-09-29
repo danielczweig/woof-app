@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Box } from '@chakra-ui/react'
 
 import CreateProfile from './components/createProfile/App.jsx'
@@ -7,7 +8,9 @@ import ProfileCard from './components/profileCard/ProfileCard.jsx'
 
 function App() {
   const [display, setDisplay] = useState('home')
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(true)
+  const [profileId, setProfileId] = useState('')
+  const [dogs, setDogs] = useState([])
 
   const displayOptions = {
     profile: null,
@@ -15,11 +18,15 @@ function App() {
     chat: null
   }
 
+  // useEffect(() => {
+  //   axios.get('http://localhost/3001', )
+  // }, [])
+
   if(loggedIn === false) {
     return (
       <>
         <div style={{backgroundColor:'rgba(0,0,0,.7)', left:'0', right:'0', top:'0', bottom:'0', display:'flex', justifyContent:'center'}}>
-          <CreateProfile />
+          <CreateProfile setLoggedIn={setLoggedIn}/>
         </div>
       </>
     )

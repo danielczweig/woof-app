@@ -36,7 +36,7 @@ const ProfileCard = () => {
       borderWidth='1px'
       borderRadius='lg'
       overflow='auto'
-      color='gray.100'
+      color='gray.900'
       backgroundColor='brand.100'
       fontSize='md'
       css={{

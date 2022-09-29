@@ -14,7 +14,7 @@ import Photos from './Photos.jsx'
 export const DisplayContext = React.createContext()
 
 
-const CreateProfile = () => {
+const CreateProfile = ( { setLoggedIn } ) => {
   const [display, setDisplay] = useState('name')
   const [profile, setProfile] = useState({
     name: '',
@@ -45,7 +45,7 @@ const CreateProfile = () => {
     location: <Location profile={profile} updateProfile={updateProfile}/>,
     photos: <Photos profile={profile} updateProfile={updateProfile}/>,
     bio: <Bio profile={profile} updateProfile={updateProfile}/>,
-    finish: <Finish profile={profile} updateProfile={updateProfile}/>
+    finish: <Finish profile={profile} updateProfile={updateProfile} setLoggedIn={setLoggedIn}/>
   }
 
   return (

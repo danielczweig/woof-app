@@ -15,7 +15,7 @@ const Photos = ( { profile, updateProfile }) => {
   const [photoTwo, setPhotoTwo] = useState('')
   const [photoThree, setPhotoThree] = useState('')
 
-  const handleSubmit = () => {updateProfile({photos: [...photoOne, photoTwo, photoThree]})}
+  const handleSubmit = () => {updateProfile({photos: [...profile.photos, photoOne, photoTwo, photoThree]})}
 
   return (
     <>
