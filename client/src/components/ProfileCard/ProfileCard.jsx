@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Text, Badge } from '@chakra-ui/react'
+import { Box, Text, Badge, IconButton } from '@chakra-ui/react'
+import { BsCheckLg, BsXLg } from "react-icons/bs"
 
 import calculateAge from '../../utils/calculateAge.js'
 import calculateDistance from '../../utils/calculateDistance.js'
@@ -9,6 +10,7 @@ import personalityTraits from '../../utils/personalityTraits.js'
 
 const ProfileCard = ( { display, profiles }) => {
 
+  const [profilesToRender, setProfilesToRender] = useState([])
   const [property, setProperty] = useState({
     imageUrl: [""],
     imageAlt: 'Image of puppy',
@@ -18,14 +20,12 @@ const ProfileCard = ( { display, profiles }) => {
     breed: '',
     location: '90403',
     bio: '',
-    // size: 'small',
     weight: 0,
     sexed: false,
     vaccinated: false,
     personality: ''
   })
 
-  let index = 0;
 
   const badgeThemes = {
     energetic: 'green',
@@ -35,26 +35,28 @@ const ProfileCard = ( { display, profiles }) => {
 
   useEffect(() => {
     if(profiles[0]) {
+      setProfilesToRender(profiles)
       setProperty({
-        imageUrl: profiles[index].photos,
+        imageUrl: profiles[0].photos,
         imageAlt: 'Image of puppy',
-        name: profiles[index].name,
-        sex: profiles[index].sex,
-        birthday: profiles[index].birthday,
-        breed: profiles[index].breed,
-        location: profiles[index].address,
-        bio: profiles[index].bio,
-        // size: 'small',
-        weight: profiles[index].weight,
-        sexed: profiles[index].sexed,
-        vaccinated: profiles[index].vaccinated,
-        personality: profiles[index].personality
+        name: profiles[0].name,
+        sex: profiles[0].sex,
+        birthday: profiles[0].birthday,
+        breed: profiles[0].breed,
+        location: profiles[0].address,
+        bio: profiles[0].bio,
+        weight: profiles[0].weight,
+        sexed: profiles[0].sexed,
+        vaccinated: profiles[0].vaccinated,
+        personality: profiles[0].personality
       });
     };
-  },[profiles, display]);
+  },[profiles, profilesToRender, display]);
 
   return (
     <Box
+      display='flex'
+      flexDirection='column'
       maxW='sm'
       h='90vh'
       borderWidth='1px'
@@ -72,6 +74,12 @@ const ProfileCard = ( { display, profiles }) => {
       <ImageCarousel
         imageUrl={property.imageUrl}
       />
+      {display === 'home' &&
+        <Box display='flex' mt='.5rem' gap='5' alignSelf='center'>
+          <IconButton aria-label='Dislike' fontSize='2rem' variant='solid' borderWidth='2px' isRound='true' h='3.25rem' w='3.25rem' colorScheme='red' icon={<BsXLg color='white'/>} onClick={() => setProfilesToRender(profilesToRender.shift())}/>
+          <IconButton aria-label='Like' fontSize='2rem' variant='solid' borderWidth='2px' isRound='true' h='3.25rem' w='3.25rem' colorScheme='green' icon={<BsCheckLg color='white'/>} onClick={() => setProfilesToRender(profilesToRender.shift())}/>
+        </Box>
+      }
       <Box p='6'>
         <Box display='flex' alignItems='baseline' flexDirection='column'>
           <Box display='flex' alignItems='baseline' gap='4px'>

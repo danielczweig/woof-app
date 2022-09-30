@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Box } from '@chakra-ui/react'
 
+import Chat from './components/Chat.jsx'
 import CreateProfile from './components/createProfile/App.jsx'
 import NavBar from './components/NavBar.jsx'
 import ProfileCard from './components/profileCard/ProfileCard.jsx'
 
 function App() {
   const [display, setDisplay] = useState('home')
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
   const [profileId, setProfileId] = useState('6335e2e6301ce38bc7015333')
   const [profile, setProfile] = useState([])
   const [profiles, setProfiles] = useState([])
@@ -16,7 +17,7 @@ function App() {
   const displayOptions = {
     profile: <ProfileCard display={display} profiles={profile}/>,
     home: <ProfileCard display={display} profiles={profiles}/>,
-    chat: null
+    chat: <Chat />
   }
 
   useEffect(() => {
